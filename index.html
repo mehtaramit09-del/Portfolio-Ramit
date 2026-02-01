@@ -1,31 +1,78 @@
-
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Digital Marketing Generalist</title>
+    <title>Ramit Mehta | Digital Marketing Generalist & CRO Specialist</title>
+    <meta name="description" content="Portfolio of Ramit Mehta, a Digital Marketing Generalist specializing in CRO, E-commerce, and AI Automation. Driving growth through data and creativity.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ramitmehta.vercel.app/">
+    <meta property="og:title" content="Ramit Mehta | Digital Marketing Generalist">
+    <meta property="og:description" content="CRO Specialist, Growth Marketer, and E-commerce expert. Explore case studies and AI-driven marketing strategies.">
+    <meta property="og:image" content="https://image2url.com/r2/default/images/1769626955219-0d15c646-45d9-413f-bd7e-3d58ca53187c.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Ramit Mehta | Digital Marketing Generalist">
+    <meta property="twitter:description" content="CRO Specialist, Growth Marketer, and E-commerce expert.">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-mesh: radial-gradient(at 0% 0%, hsla(210,100%,98%,1) 0, transparent 50%), 
+                       radial-gradient(at 50% 0%, hsla(220,100%,97%,1) 0, transparent 50%), 
+                       radial-gradient(at 100% 0%, hsla(230,100%,98%,1) 0, transparent 50%);
+        }
         body {
             font-family: 'Inter', sans-serif;
             background-color: #ffffff;
             color: #111827;
+            background-image: var(--bg-mesh);
+            background-attachment: fixed;
         }
         .gradient-text {
-            background: linear-gradient(to right, #111827, #6b7280);
+            background: linear-gradient(135deg, #111827 0%, #4b5563 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .reveal {
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease-out;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
         }
     </style>
 <script type="importmap">
@@ -34,7 +81,8 @@
     "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
     "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4"
+    "react": "https://esm.sh/react@^19.2.4",
+    "@google/genai": "https://esm.sh/@google/genai@^0.2.1"
   }
 }
 </script>
