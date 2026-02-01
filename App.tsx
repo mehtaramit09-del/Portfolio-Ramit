@@ -15,12 +15,99 @@ import {
   Menu, 
   X, 
   ArrowUp, 
-  ExternalLink 
+  ExternalLink,
+  Globe,
+  MousePointer2,
+  Share2
 } from 'lucide-react';
-import { ExperienceCardProps, CaseStudyProps } from './types';
+import { ExperienceCardProps, CaseStudyProps, ProjectItem } from './types';
 import { ScrollReveal } from './components/ScrollReveal';
 
+// --- Data Constants ---
+
+const ALL_PROJECTS = [
+  {
+    category: "Conversion Rate Optimization",
+    items: [
+      { name: "CRO Strategy & Case Study Deck", url: "https://docs.google.com/presentation/d/19HJoeY1kJnaQCtohBQGWjbLTtQfOlOx4_g52JF7FHiU/edit?usp=sharing" }
+    ]
+  },
+  {
+    category: "Digital Marketing Foundation",
+    items: [
+      { name: "WordPress Blog Creation", url: "https://docs.google.com/presentation/d/1yudb3M0lHcnQbFl8SGhrvLdiJ8luZUfC/edit?usp=sharing&ouid=105681893837280252861&rtpof=true&sd=true" }, 
+      { name: "Google Ads (SEM) Campaign", url: "https://drive.google.com/file/d/1fRT3KOvt7VwKdWJ2_HU2owecqre1Qnkd/view?usp=sharing" }, 
+      { name: "SEO Technical Audits", url: "https://docs.google.com/presentation/d/1tElIfrE1fAtE0LpSd1zVmexyrp_3iJH3/edit?usp=sharing&ouid=105681893837280252861&rtpof=true&sd=true" },
+      { name: "Social Media Marketing: Facebook Campaign", url: "https://drive.google.com/file/d/1mDwjOXADX5ttKxYxT0SH2yjIQjFNWUab/view?usp=sharing" }
+    ]
+  }
+];
+
 // --- Components ---
+
+const ProjectsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+      <div 
+        className="fixed inset-0 bg-black/60 backdrop-blur-xl transition-opacity duration-300"
+        onClick={onClose}
+      />
+      
+      <div className="relative z-10 bg-white rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 max-w-2xl w-full shadow-2xl border border-gray-100 transform transition-all duration-300 animate-in fade-in zoom-in-95 duration-300">
+        <button 
+          onClick={onClose}
+          className="absolute top-6 right-6 p-2 text-gray-400 hover:text-black transition-colors rounded-full hover:bg-gray-100"
+          aria-label="Close modal"
+        >
+          <X size={24} />
+        </button>
+
+        <div className="mb-10">
+          <h3 className="text-3xl font-bold mb-2 tracking-tight">Key Projects Gallery</h3>
+          <p className="text-gray-500">A consolidated view of my strategic marketing implementations.</p>
+        </div>
+
+        <div className="space-y-10 max-h-[60vh] overflow-y-auto pr-4 custom-scrollbar">
+          {ALL_PROJECTS.map((group, idx) => (
+            <div key={idx} className="space-y-4">
+              <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 px-1">{group.category}</h4>
+              <div className="grid grid-cols-1 gap-3">
+                {group.items.map((project, pIdx) => (
+                  <a 
+                    key={pIdx} 
+                    href={project.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-black hover:bg-white hover:shadow-lg transition-all group"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-white border border-gray-200 rounded-xl flex items-center justify-center text-gray-400 group-hover:text-black transition-colors">
+                        {group.category.includes("CRO") ? <MousePointer2 size={18} /> : group.category.includes("SEO") ? <Globe size={18} /> : <Share2 size={18} />}
+                      </div>
+                      <span className="font-bold text-gray-800 text-sm sm:text-base">{project.name}</span>
+                    </div>
+                    <ExternalLink size={18} className="text-gray-300 group-hover:text-black group-hover:translate-x-1 transition-all" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 pt-8 border-t border-gray-100 flex justify-center">
+          <button 
+            onClick={onClose}
+            className="px-8 py-3 text-sm font-bold text-gray-400 hover:text-black transition-colors"
+          >
+            Close Gallery
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   if (!isOpen) return null;
@@ -30,13 +117,9 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
       <div 
         className="fixed inset-0 bg-black/50 backdrop-blur-md transition-opacity duration-300"
         onClick={onClose}
-        style={{ zIndex: 0 }}
       />
       
-      <div 
-        className="relative z-10 bg-white rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 max-w-lg w-full shadow-[0_32px_64px_-15px_rgba(0,0,0,0.3)] border border-gray-100 transform transition-all duration-300 scale-100"
-        style={{ zIndex: 10 }}
-      >
+      <div className="relative z-10 bg-white rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 max-w-lg w-full shadow-[0_32px_64px_-15px_rgba(0,0,0,0.3)] border border-gray-100 transform transition-all duration-300">
         <button 
           onClick={onClose}
           className="absolute top-4 right-4 sm:top-8 sm:right-8 p-2 text-gray-400 hover:text-black transition-colors rounded-full hover:bg-gray-100"
@@ -368,6 +451,7 @@ const TimelineItem = ({ year, title, description, isRight }: { year: string; tit
 export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isProjectsModalOpen, setIsProjectsModalOpen] = useState(false);
 
   useEffect(() => {
     const checkScrollTop = () => {
@@ -385,23 +469,15 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleScrollToProjects = () => {
-    const el = document.getElementById('case-studies');
-    if (el) {
-      const headerOffset = 64;
-      const elementPosition = el.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
+  const handleViewProjects = () => {
+    setIsProjectsModalOpen(true);
   };
 
   return (
     <div className="min-h-screen selection:bg-gray-200 bg-white">
       <Navbar />
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
+      <ProjectsModal isOpen={isProjectsModalOpen} onClose={() => setIsProjectsModalOpen(false)} />
 
       {/* Hero Section */}
       <section id="about" className="pt-32 pb-20 px-6 bg-gradient-to-b from-gray-50 to-white overflow-hidden scroll-mt-20">
@@ -418,16 +494,16 @@ export default function App() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <button 
-                onClick={() => setIsContactModalOpen(true)}
+                onClick={handleViewProjects}
                 className="px-8 py-4 bg-black text-white rounded-full font-semibold transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:-translate-y-1 hover:shadow-2xl text-center shadow-lg shadow-black/10 flex-1 sm:flex-none"
               >
-                Get in Touch
+                View Projects
               </button>
               <button 
-                onClick={handleScrollToProjects}
+                onClick={() => setIsContactModalOpen(true)}
                 className="px-8 py-4 bg-white border border-gray-200 text-gray-900 rounded-full font-semibold transition-all duration-300 ease-in-out hover:border-black hover:scale-105 hover:-translate-y-1 hover:shadow-xl text-center flex-1 sm:flex-none"
               >
-                View Projects
+                Get in Touch
               </button>
             </div>
           </ScrollReveal>
@@ -475,7 +551,7 @@ export default function App() {
             <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gray-200 hidden md:block"></div>
             <TimelineItem year="2022" title="E-commerce Mastery" description="Amazon, Flipkart, Meesho management." isRight={false} />
             <TimelineItem year="2023" title="Digital Foundation" description="Upgrad Digital Marketing Course." isRight={true} />
-            <TimelineItem year="2024" title="Cash24 Growth Marketing" description="UAE automotive growth strategy." isRight={false} />
+            <TimelineItem year="2024" title="Cars24 Growth Marketing" description="UAE automotive growth strategy." isRight={false} />
             <TimelineItem year="2025" title="CRO Specialist & Troovy" description="Optimization for major brands." isRight={true} />
             <TimelineItem year="Now" title="AI & Automation" description="Vibe coding & marketing automation." isRight={false} />
           </div>
@@ -508,7 +584,7 @@ export default function App() {
             </ScrollReveal>
             <ScrollReveal>
               <ExperienceCard 
-                title="Growth Marketing Intern" company="Cash24 (UAE)" period="2024" icon={<Zap size={24} />}
+                title="Growth Marketing Intern" company="Cars24 (UAE)" period="2024" icon={<Zap size={24} />}
                 description="Organic growth strategies for automotive marketplace in Dubai."
                 achievements={["Marketplace optimization", "Strategies over paid ads", "Cross-platform management"]}
                 gradient="from-neutral-600 to-neutral-800"
@@ -541,7 +617,7 @@ export default function App() {
             approach="Quantitative research, competitor analyses, and qualitative feedback + A/B testing."
             results={["20-30% Average Uplift", "50% Peak Performance", "15+ Successful Tests"]}
             tools={["Convert", "GA4", "ContentSquare", "Figma", "Crazy Egg", "Adobe Analytics"]}
-            projects={[{ name: "CRO Strategy & Case Study Deck", url: "https://docs.google.com/presentation/d/19HJoeY1kJnaQCtohBQGWjbLTtQfOlOx4_g52JF7FHiU/edit?usp=sharing" }]}
+            projects={ALL_PROJECTS[0].items}
           />
 
           <CaseStudy 
@@ -557,12 +633,7 @@ export default function App() {
             id="foundation" header="Building Core Skills: Foundation Project" icon={<Award size={24} />}
             gradient="from-gray-600 to-gray-800"
             challenge="Transition into digital marketing by mastering broad disciplines through hands-on practice and technical audits."
-            projects={[
-              { name: "WordPress Blog Creation", url: "https://docs.google.com/presentation/d/1yudb3M0lHcnQbFl8SGhrvLdiJ8luZUfC/edit?usp=sharing&ouid=105681893837280252861&rtpof=true&sd=true" }, 
-              { name: "Google Ads (SEM) Campaign", url: "https://drive.google.com/file/d/1fRT3KOvt7VwKdWJ2_HU2owecqre1Qnkd/view?usp=sharing" }, 
-              { name: "SEO Technical Audits", url: "https://docs.google.com/presentation/d/1tElIfrE1fAtE0LpSd1zVmexyrp_3iJH3/edit?usp=sharing&ouid=105681893837280252861&rtpof=true&sd=true" },
-              { name: "Social Media Marketing: Facebook Campaign", url: "https://drive.google.com/file/d/1mDwjOXADX5ttKxYxT0SH2yjIQjFNWUab/view?usp=sharing" }
-            ]}
+            projects={ALL_PROJECTS[1].items}
             results={["6-Month Specialization", "Hands-on Mastery", "Foundation for CRO"]}
             tools={["WordPress", "SEO", "Google Ads", "Facebook Ads", "Analytics"]}
           />
