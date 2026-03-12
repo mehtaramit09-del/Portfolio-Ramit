@@ -172,7 +172,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['about', 'experience', 'case-studies', 'skills', 'contact'];
+      const sections = ['about', 'journey', 'experience', 'case-studies', 'skills', 'contact'];
       const scrollPosition = window.scrollY + 120;
 
       for (const section of sections) {
@@ -469,6 +469,19 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const scrollToJourney = () => {
+    const element = document.getElementById('journey');
+    if (element) {
+      const headerOffset = 64;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   const handleViewProjects = () => {
     setIsProjectsModalOpen(true);
   };
@@ -512,9 +525,10 @@ export default function App() {
             <div className="relative group">
               <div className="w-64 h-80 md:w-80 md:h-[480px] bg-white rounded-[2rem] shadow-2xl overflow-hidden border-4 border-white transition-all duration-500 hover:scale-[1.02] hover:shadow-3xl">
                 <img 
-                  src="https://image2url.com/r2/default/images/1769626955219-0d15c646-45d9-413f-bd7e-3d58ca53187c.png" 
+                  src="https://user4292.na.imgto.link/public/20260312/screenshot-2026-03-12-153949.avif" 
                   alt="Ramit Mehta Portrait" 
                   className="w-full h-full object-cover object-top"
+                  referrerPolicy="no-referrer"
                 />
               </div>
               
@@ -536,12 +550,18 @@ export default function App() {
         </div>
         
         <div className="flex justify-center mt-20 animate-bounce">
-          <ChevronDown className="text-gray-300" />
+          <button 
+            onClick={scrollToJourney}
+            className="p-2 text-gray-300 hover:text-black transition-colors"
+            aria-label="Scroll to journey"
+          >
+            <ChevronDown size={32} />
+          </button>
         </div>
       </section>
 
       {/* Journey Timeline */}
-      <section className="py-24 px-6 bg-gray-50">
+      <section id="journey" className="py-24 px-6 bg-gray-50 scroll-mt-20">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-4 tracking-tight">The Journey</h2>
@@ -660,7 +680,7 @@ export default function App() {
               <h4 className="text-xs font-bold uppercase tracking-widest text-blue-500 mb-6 flex items-center gap-2">Intermediate</h4>
               <ul className="space-y-4 font-medium text-gray-700">
                 <li>Social Media</li>
-                <li>Influencer Mkt</li>
+                <li>Influencer Marketing</li>
                 <li>SEO / SEM</li>
               </ul>
             </ScrollReveal>
