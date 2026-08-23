@@ -674,14 +674,17 @@ export default function App() {
                 <li>CRO & Competitor Analyses</li>
                 <li>E-commerce</li>
                 <li>Figma</li>
+                <li>ClickUp</li>
               </ul>
             </ScrollReveal>
             <ScrollReveal className="bg-white p-8 rounded-2xl shadow-sm">
               <h4 className="text-xs font-bold uppercase tracking-widest text-blue-500 mb-6 flex items-center gap-2">Intermediate</h4>
               <ul className="space-y-4 font-medium text-gray-700">
+                <li>SQL</li>
+                <li>Python</li>
+                <li>Power BI</li>
                 <li>Data Analysis</li>
                 <li>A/B Testing</li>
-                <li>Social Media</li>
                 <li>Influencer Marketing</li>
                 <li>SEO / SEM</li>
               </ul>
@@ -691,6 +694,7 @@ export default function App() {
               <ul className="space-y-4 font-medium text-gray-700">
                 <li>AI in Marketing</li>
                 <li>Vibe Coding</li>
+                <li>Jira</li>
               </ul>
             </ScrollReveal>
           </div>
