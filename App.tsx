@@ -525,9 +525,9 @@ export default function App() {
             <div className="relative group">
               <div className="w-64 h-80 md:w-80 md:h-[480px] bg-white rounded-[2rem] shadow-2xl overflow-hidden border-4 border-white transition-all duration-500 hover:scale-[1.02] hover:shadow-3xl">
                 <img 
-                  src="https://user4292.na.imgto.link/public/20260312/screenshot-2026-03-12-153949.avif" 
+                  src="https://i.ibb.co/Pz4HZW2J/1763154192490.jpg" 
                   alt="Ramit Mehta Portrait" 
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-cover object-center"
                   referrerPolicy="no-referrer"
                 />
               </div>
