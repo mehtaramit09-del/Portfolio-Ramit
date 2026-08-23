@@ -497,13 +497,13 @@ export default function App() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <ScrollReveal>
             <div className="inline-block px-4 py-1.5 bg-white border border-gray-200 rounded-full text-xs font-semibold tracking-wide text-gray-600 mb-6 shadow-sm">
-              Digital Marketing Generalist
+              Marketing & Business Analytics
             </div>
             <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-8 leading-tight">
-              Exploring the <span className="gradient-text">Intersection</span> of Data, Creativity & Growth
+              Turning Data Into <span className="gradient-text">Growth Decisions</span>
             </h1>
             <p className="text-xl text-gray-600 mb-10 max-w-lg leading-relaxed">
-              From E-commerce to CRO, Social Media to AI Automation—I adapt, learn, and deliver measurable results.
+              From e-commerce analytics to conversion rate optimization—I analyze data to uncover insights and drive measurable business outcomes.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <button 
@@ -569,11 +569,11 @@ export default function App() {
           </div>
           <div className="relative">
             <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gray-200 hidden md:block"></div>
-            <TimelineItem year="2022" title="E-commerce Mastery" description="Amazon, Flipkart, Meesho management." isRight={false} />
+            <TimelineItem year="2022" title="E-commerce Analytics" description="Amazon, Flipkart, Meesho management." isRight={false} />
             <TimelineItem year="2023" title="Digital Foundation" description="Upgrad Digital Marketing Course." isRight={true} />
-            <TimelineItem year="2024" title="Cars24 Growth Marketing" description="UAE automotive growth strategy." isRight={false} />
-            <TimelineItem year="2025" title="CRO Specialist & Troovy" description="Optimization for major brands." isRight={true} />
-            <TimelineItem year="Now" title="AI & Automation" description="Vibe coding & marketing automation." isRight={false} />
+            <TimelineItem year="2024" title="Cars24 Growth Analytics" description="UAE automotive growth strategy." isRight={false} />
+            <TimelineItem year="2025" title="CRO & Data Analysis" description="Optimization for major brands." isRight={true} />
+            <TimelineItem year="Now" title="AI-Driven Analytics" description="Vibe coding & marketing automation." isRight={false} />
           </div>
         </div>
       </section>
@@ -604,17 +604,17 @@ export default function App() {
             </ScrollReveal>
             <ScrollReveal>
               <ExperienceCard 
-                title="Growth Marketing Intern" company="Cars24 (UAE)" period="2024" icon={<Zap size={24} />}
+                title="Growth Analytics Intern" company="Cars24 (UAE)" period="2024" icon={<Zap size={24} />}
                 description="Organic growth strategies for automotive marketplace in Dubai."
-                achievements={["Marketplace optimization", "Strategies over paid ads", "Cross-platform management"]}
+                achievements={["Marketplace performance analysis", "Data-driven strategy over paid acquisition", "Cross-platform management"]}
                 gradient="from-neutral-600 to-neutral-800"
               />
             </ScrollReveal>
             <ScrollReveal>
               <ExperienceCard 
-                title="E-commerce Specialist" company="Amazon, Flipkart, Meesho" period="2022" icon={<ShoppingCart size={24} />}
+                title="E-commerce Analyst" company="Amazon, Flipkart, Meesho" period="2022" icon={<ShoppingCart size={24} />}
                 description="End-to-end marketplace management across India's top 3 platforms."
-                achievements={["Product listing optimization", "SEO & Platform Compliance", "Ads campaign management"]}
+                achievements={["Listing performance analysis & optimization", "SEO & Platform Compliance", "Ads campaign management"]}
                 gradient="from-stone-600 to-stone-800"
               />
             </ScrollReveal>
@@ -634,7 +634,7 @@ export default function App() {
             id="cro" header="20-50% Conversions for Indian Brands" icon={<BarChart size={24} />}
             gradient="from-slate-600 to-slate-800"
             challenge="Plateau in e-commerce conversion rates despite high traffic volumes for major fashion brands."
-            approach="Quantitative research, competitor analyses, and qualitative feedback + A/B testing."
+            approach="Quantitative and qualitative data analysis, competitor benchmarking, and A/B test design."
             results={["20-30% Average Uplift", "50% Peak Performance", "15+ Successful Tests"]}
             tools={["Convert", "GA4", "ContentSquare", "Figma", "Crazy Egg", "Adobe Analytics"]}
             projects={ALL_PROJECTS[0].items}
@@ -644,7 +644,7 @@ export default function App() {
             id="ecommerce" header="End-to-End Marketplace Management" icon={<ShoppingCart size={24} />}
             gradient="from-stone-600 to-stone-800"
             challenge="Successfully launch and scale products across Amazon, Flipkart, and Meesho—three distinct platforms with different algorithms."
-            execution="Developed comprehensive marketplace strategy covering listing optimization, platform-specific SEO, and local ads management."
+            execution="Analyzed multi-platform performance data to develop a marketplace strategy covering listing optimization, SEO, and ads performance tracking."
             results={["Multi-Platform Scale", "Optimized Listings", "High Ads ROI"]}
             tools={["Amazon Seller Central", "Flipkart Seller Hub", "Helium 10", "Canva", "Google Sheets"]}
           />
@@ -652,7 +652,7 @@ export default function App() {
           <CaseStudy 
             id="foundation" header="Building Core Skills: Foundation Project" icon={<Award size={24} />}
             gradient="from-gray-600 to-gray-800"
-            challenge="Transition into digital marketing by mastering broad disciplines through hands-on practice and technical audits."
+            challenge="Built foundational data and marketing analytics skills through hands-on campaigns and technical/SEO audits."
             projects={ALL_PROJECTS[1].items}
             results={["6-Month Specialization", "Hands-on Mastery", "Foundation for CRO"]}
             tools={["WordPress", "SEO", "Google Ads", "Facebook Ads", "Analytics"]}
@@ -670,15 +670,17 @@ export default function App() {
             <ScrollReveal className="bg-white p-8 rounded-2xl shadow-sm">
               <h4 className="text-xs font-bold uppercase tracking-widest text-green-500 mb-6 flex items-center gap-2">Advanced</h4>
               <ul className="space-y-4 font-medium text-gray-700">
+                <li>GA4</li>
                 <li>CRO & Competitor Analyses</li>
                 <li>E-commerce</li>
                 <li>Figma</li>
-                <li>GA4</li>
               </ul>
             </ScrollReveal>
             <ScrollReveal className="bg-white p-8 rounded-2xl shadow-sm">
               <h4 className="text-xs font-bold uppercase tracking-widest text-blue-500 mb-6 flex items-center gap-2">Intermediate</h4>
               <ul className="space-y-4 font-medium text-gray-700">
+                <li>Data Analysis</li>
+                <li>A/B Testing</li>
                 <li>Social Media</li>
                 <li>Influencer Marketing</li>
                 <li>SEO / SEM</li>
