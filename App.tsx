@@ -18,7 +18,24 @@ import {
   ExternalLink,
   Globe,
   MousePointer2,
-  Share2
+  Share2,
+  BarChart3,
+  Activity,
+  FileSpreadsheet,
+  LayoutGrid,
+  Target,
+  Figma,
+  CheckSquare,
+  Database,
+  Code2,
+  BarChart2,
+  LineChart,
+  GitCompare,
+  Megaphone,
+  Search,
+  Sparkles,
+  Wand2,
+  Kanban
 } from 'lucide-react';
 import { ExperienceCardProps, CaseStudyProps, ProjectItem } from './types';
 import { ScrollReveal } from './components/ScrollReveal';
@@ -26,6 +43,12 @@ import { ScrollReveal } from './components/ScrollReveal';
 // --- Data Constants ---
 
 const ALL_PROJECTS = [
+  {
+    category: "Data & Business Analytics",
+    items: [
+      { name: "End-to-End Business Analytics Case Study", url: "https://github.com/ramitmehta4/mock-business-analytics/tree/main/Project%20portfolio" }
+    ]
+  },
   {
     category: "Conversion Rate Optimization",
     items: [
@@ -84,7 +107,7 @@ const ProjectsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 bg-white border border-gray-200 rounded-xl flex items-center justify-center text-gray-400 group-hover:text-black transition-colors">
-                        {group.category.includes("CRO") ? <MousePointer2 size={18} /> : group.category.includes("SEO") ? <Globe size={18} /> : <Share2 size={18} />}
+                        {group.category.includes("Data") || group.category.includes("Analytics") ? <BarChart size={18} /> : group.category.includes("CRO") ? <MousePointer2 size={18} /> : group.category.includes("SEO") ? <Globe size={18} /> : <Share2 size={18} />}
                       </div>
                       <span className="font-bold text-gray-800 text-sm sm:text-base">{project.name}</span>
                     </div>
@@ -332,16 +355,34 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ title, company, period,
   );
 };
 
-const CaseStudy: React.FC<CaseStudyProps> = ({ header, challenge, approach, execution, results, learnings, tools, projects, gradient, icon }) => (
+const CaseStudy: React.FC<CaseStudyProps> = ({ header, period, link, challenge, approach, execution, results, learnings, tools, projects, gradient, icon }) => (
   <ScrollReveal className="mb-16 last:mb-0">
     <div className={`rounded-3xl overflow-hidden border border-gray-100 shadow-sm bg-white`}>
       <div className={`p-8 md:p-12 bg-gradient-to-br ${gradient} text-white flex flex-col md:flex-row md:items-center justify-between gap-6`}>
         <div className="max-w-2xl">
-          <div className="p-3 bg-white/10 w-fit rounded-xl mb-6">
-            {icon}
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-white/10 w-fit rounded-xl">
+              {icon}
+            </div>
+            {period && (
+              <span className="px-3 py-1 bg-white/15 backdrop-blur-sm rounded-full text-xs font-semibold tracking-wider uppercase border border-white/20">
+                {period}
+              </span>
+            )}
           </div>
           <h3 className="text-2xl md:text-3xl font-bold leading-tight">{header}</h3>
         </div>
+        {link && (
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 rounded-full font-bold text-sm hover:bg-gray-100 transition-all shadow-lg shrink-0 group self-start md:self-center"
+          >
+            <span>View on GitHub</span>
+            <ExternalLink size={16} className="group-hover:translate-x-0.5 transition-transform" />
+          </a>
+        )}
       </div>
       
       <div className="p-8 md:p-12 grid grid-cols-1 md:grid-cols-12 gap-12">
@@ -569,9 +610,9 @@ export default function App() {
           </div>
           <div className="relative">
             <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gray-200 hidden md:block"></div>
-            <TimelineItem year="2022" title="E-commerce Analytics" description="Amazon, Flipkart, Meesho management." isRight={false} />
-            <TimelineItem year="2023" title="Digital Foundation" description="Upgrad Digital Marketing Course." isRight={true} />
-            <TimelineItem year="2024" title="Cars24 Growth Analytics" description="UAE automotive growth strategy." isRight={false} />
+            <TimelineItem year="2023" title="Digital Foundation" description="Upgrad Digital Marketing Course." isRight={false} />
+            <TimelineItem year="Oct 2023 – Jan 2024" title="Cars24 Growth Analytics" description="UAE automotive growth strategy." isRight={true} />
+            <TimelineItem year="Mar 2024 – Dec 2024" title="E-commerce Analytics" description="Amazon, Flipkart, Meesho management." isRight={false} />
             <TimelineItem year="2025" title="CRO & Data Analysis" description="Optimization for major brands." isRight={true} />
             <TimelineItem year="Now" title="AI-Driven Analytics" description="Vibe coding & marketing automation." isRight={false} />
           </div>
@@ -587,8 +628,8 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <ScrollReveal>
               <ExperienceCard 
-                title="CRO Specialist" company="Various Brands" period="2025" icon={<TrendingUp size={24} />}
-                description="Led CRO initiatives for Pantaloons and Aditya Birla Fashion."
+                title="CRO Analyst/Strategist" company="OptiPhoenix Xperts Pvt. Ltd." period="2025" icon={<TrendingUp size={24} />}
+                description="Led CRO initiatives for Aditya Birla Fashion."
                 achievements={["20-50% conversion rate uplift", "Competitor Analyses & User Research", "Mastered: Convert, GA4, Adobe Analytics, Figma"]}
                 gradient="from-slate-600 to-slate-800"
                 link="https://docs.google.com/presentation/d/19HJoeY1kJnaQCtohBQGWjbLTtQfOlOx4_g52JF7FHiU/edit?slide=id.p#slide=id.p"
@@ -604,7 +645,7 @@ export default function App() {
             </ScrollReveal>
             <ScrollReveal>
               <ExperienceCard 
-                title="Growth Analytics Intern" company="Cars24 (UAE)" period="2024" icon={<Zap size={24} />}
+                title="Growth Intern (Part-time)" company="Cars24 (UAE)" period="Oct 2023 – Jan 2024" icon={<Zap size={24} />}
                 description="Organic growth strategies for automotive marketplace in Dubai."
                 achievements={["Marketplace performance analysis", "Data-driven strategy over paid acquisition", "Cross-platform management"]}
                 gradient="from-neutral-600 to-neutral-800"
@@ -612,8 +653,8 @@ export default function App() {
             </ScrollReveal>
             <ScrollReveal>
               <ExperienceCard 
-                title="E-commerce Analyst" company="Amazon, Flipkart, Meesho" period="2022" icon={<ShoppingCart size={24} />}
-                description="End-to-end marketplace management across India's top 3 platforms."
+                title="E-Commerce Analytics and Operations Associate (Part-time)" company="AMP Operational Services" period="Mar 2024 – Dec 2024" icon={<ShoppingCart size={24} />}
+                description="End-to-end marketplace management across India's top 3 platforms (Amazon, Flipkart, Meesho)."
                 achievements={["Listing performance analysis & optimization", "SEO & Platform Compliance", "Ads campaign management"]}
                 gradient="from-stone-600 to-stone-800"
               />
@@ -631,13 +672,28 @@ export default function App() {
           </div>
 
           <CaseStudy 
+            id="analytics-case-study" 
+            header="Independent Portfolio Project — End-to-End Business Analytics Case Study" 
+            period="Jan 2026 – Present"
+            link="https://github.com/ramitmehta4/mock-business-analytics/tree/main/Project%20portfolio"
+            icon={<BarChart size={24} />}
+            gradient="from-slate-700 to-slate-900"
+            challenge="A complete e-commerce CRO case study covering funnel/segment diagnosis, A/B test statistical auditing, and cart-abandonment root-cause analysis."
+            approach="Conducted granular funnel breakdown and segmented behavioral analysis to locate conversion bottlenecks and drops across user journeys."
+            execution="Built using Python, SQL, Tableau, and Excel, with AI-assisted development workflows to perform statistical audits of A/B tests and diagnose root causes of cart abandonment."
+            results={["Funnel & Segment Diagnosis", "A/B Test Statistical Auditing", "Cart-Abandonment Root-Cause Analysis"]}
+            tools={["Python", "SQL", "Tableau", "Excel", "AI-Assisted Workflows", "Statistical Analysis"]}
+            projects={ALL_PROJECTS[0].items}
+          />
+
+          <CaseStudy 
             id="cro" header="20-50% Conversions for Indian Brands" icon={<BarChart size={24} />}
             gradient="from-slate-600 to-slate-800"
             challenge="Plateau in e-commerce conversion rates despite high traffic volumes for major fashion brands."
             approach="Quantitative and qualitative data analysis, competitor benchmarking, and A/B test design."
             results={["20-30% Average Uplift", "50% Peak Performance", "15+ Successful Tests"]}
             tools={["Convert", "GA4", "ContentSquare", "Figma", "Crazy Egg", "Adobe Analytics"]}
-            projects={ALL_PROJECTS[0].items}
+            projects={ALL_PROJECTS[1].items}
           />
 
           <CaseStudy 
@@ -653,7 +709,7 @@ export default function App() {
             id="foundation" header="Building Core Skills: Foundation Project" icon={<Award size={24} />}
             gradient="from-gray-600 to-gray-800"
             challenge="Built foundational data and marketing analytics skills through hands-on campaigns and technical/SEO audits."
-            projects={ALL_PROJECTS[1].items}
+            projects={ALL_PROJECTS[2].items}
             results={["6-Month Specialization", "Hands-on Mastery", "Foundation for CRO"]}
             tools={["WordPress", "SEO", "Google Ads", "Facebook Ads", "Analytics"]}
           />
@@ -665,36 +721,139 @@ export default function App() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-4 tracking-tight">Skills Arsenal</h2>
+            <p className="text-gray-500">Core analytics tools, experimentation frameworks, and tech competencies</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <ScrollReveal className="bg-white p-8 rounded-2xl shadow-sm">
-              <h4 className="text-xs font-bold uppercase tracking-widest text-green-500 mb-6 flex items-center gap-2">Advanced</h4>
-              <ul className="space-y-4 font-medium text-gray-700">
-                <li>GA4</li>
-                <li>CRO & Competitor Analyses</li>
-                <li>E-commerce</li>
-                <li>Figma</li>
-                <li>ClickUp</li>
+            <ScrollReveal className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100/70">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-emerald-600 mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                Advanced
+              </h4>
+              <ul className="space-y-3 font-medium text-gray-700">
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-emerald-600 group-hover:bg-emerald-50/70 group-hover:border-emerald-100 transition-all shrink-0 shadow-2xs">
+                    <BarChart3 size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">GA4</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-emerald-600 group-hover:bg-emerald-50/70 group-hover:border-emerald-100 transition-all shrink-0 shadow-2xs">
+                    <Activity size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">Adobe Analytics</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-emerald-600 group-hover:bg-emerald-50/70 group-hover:border-emerald-100 transition-all shrink-0 shadow-2xs">
+                    <FileSpreadsheet size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">Excel</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-emerald-600 group-hover:bg-emerald-50/70 group-hover:border-emerald-100 transition-all shrink-0 shadow-2xs">
+                    <LayoutGrid size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">Tableau</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-emerald-600 group-hover:bg-emerald-50/70 group-hover:border-emerald-100 transition-all shrink-0 shadow-2xs">
+                    <Target size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">CRO & Competitor Analyses</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-emerald-600 group-hover:bg-emerald-50/70 group-hover:border-emerald-100 transition-all shrink-0 shadow-2xs">
+                    <ShoppingCart size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">E-commerce</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-emerald-600 group-hover:bg-emerald-50/70 group-hover:border-emerald-100 transition-all shrink-0 shadow-2xs">
+                    <Figma size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">Figma</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-emerald-600 group-hover:bg-emerald-50/70 group-hover:border-emerald-100 transition-all shrink-0 shadow-2xs">
+                    <CheckSquare size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">ClickUp</span>
+                </li>
               </ul>
             </ScrollReveal>
-            <ScrollReveal className="bg-white p-8 rounded-2xl shadow-sm">
-              <h4 className="text-xs font-bold uppercase tracking-widest text-blue-500 mb-6 flex items-center gap-2">Intermediate</h4>
-              <ul className="space-y-4 font-medium text-gray-700">
-                <li>SQL</li>
-                <li>Python</li>
-                <li>Power BI</li>
-                <li>Data Analysis</li>
-                <li>A/B Testing</li>
-                <li>Influencer Marketing</li>
-                <li>SEO / SEM</li>
+            <ScrollReveal className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100/70">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-blue-600 mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                Intermediate
+              </h4>
+              <ul className="space-y-3 font-medium text-gray-700">
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-blue-600 group-hover:bg-blue-50/70 group-hover:border-blue-100 transition-all shrink-0 shadow-2xs">
+                    <Database size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">SQL</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-blue-600 group-hover:bg-blue-50/70 group-hover:border-blue-100 transition-all shrink-0 shadow-2xs">
+                    <Code2 size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">Python</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-blue-600 group-hover:bg-blue-50/70 group-hover:border-blue-100 transition-all shrink-0 shadow-2xs">
+                    <BarChart2 size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">Power BI</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-blue-600 group-hover:bg-blue-50/70 group-hover:border-blue-100 transition-all shrink-0 shadow-2xs">
+                    <LineChart size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">Data Analysis</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-blue-600 group-hover:bg-blue-50/70 group-hover:border-blue-100 transition-all shrink-0 shadow-2xs">
+                    <GitCompare size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">A/B Testing</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-blue-600 group-hover:bg-blue-50/70 group-hover:border-blue-100 transition-all shrink-0 shadow-2xs">
+                    <Megaphone size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">Influencer Marketing</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-blue-600 group-hover:bg-blue-50/70 group-hover:border-blue-100 transition-all shrink-0 shadow-2xs">
+                    <Search size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">SEO / SEM</span>
+                </li>
               </ul>
             </ScrollReveal>
-            <ScrollReveal className="bg-white p-8 rounded-2xl shadow-sm">
-              <h4 className="text-xs font-bold uppercase tracking-widest text-purple-500 mb-6 flex items-center gap-2">Currently Learning</h4>
-              <ul className="space-y-4 font-medium text-gray-700">
-                <li>AI in Marketing</li>
-                <li>Vibe Coding</li>
-                <li>Jira</li>
+            <ScrollReveal className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100/70">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-purple-600 mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-purple-500"></span>
+                Currently Learning
+              </h4>
+              <ul className="space-y-3 font-medium text-gray-700">
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-purple-600 group-hover:bg-purple-50/70 group-hover:border-purple-100 transition-all shrink-0 shadow-2xs">
+                    <Sparkles size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">AI in Marketing</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-purple-600 group-hover:bg-purple-50/70 group-hover:border-purple-100 transition-all shrink-0 shadow-2xs">
+                    <Wand2 size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">Vibe Coding</span>
+                </li>
+                <li className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-50/80 transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 group-hover:text-purple-600 group-hover:bg-purple-50/70 group-hover:border-purple-100 transition-all shrink-0 shadow-2xs">
+                    <Kanban size={16} />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">Jira</span>
+                </li>
               </ul>
             </ScrollReveal>
           </div>

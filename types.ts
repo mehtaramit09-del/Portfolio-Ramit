@@ -20,6 +20,8 @@ export interface ExperienceCardProps {
 export interface CaseStudyProps {
   id: string;
   header: string;
+  period?: string;
+  link?: string;
   challenge: string;
   approach?: string;
   execution?: string;
