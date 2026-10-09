@@ -629,7 +629,7 @@ export default function App() {
             <ScrollReveal>
               <ExperienceCard 
                 title="CRO Analyst/Strategist" company="OptiPhoenix Xperts Pvt. Ltd." period="2025" icon={<TrendingUp size={24} />}
-                description="Led CRO initiatives for Aditya Birla Fashion."
+                description="Led CRO initiatives for Top Indian fashion brands."
                 achievements={["20-50% conversion rate uplift", "Competitor Analyses & User Research", "Mastered: Convert, GA4, Adobe Analytics, Figma"]}
                 gradient="from-slate-600 to-slate-800"
                 link="https://docs.google.com/presentation/d/19HJoeY1kJnaQCtohBQGWjbLTtQfOlOx4_g52JF7FHiU/edit?slide=id.p#slide=id.p"
