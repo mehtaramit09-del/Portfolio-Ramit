@@ -4,6 +4,7 @@ import React from 'react';
 export interface ProjectItem {
   name: string;
   url: string;
+  description?: string;
 }
 
 export interface ExperienceCardProps {
@@ -15,6 +16,8 @@ export interface ExperienceCardProps {
   gradient: string;
   icon: React.ReactNode;
   link?: string;
+  onCardClick?: () => void;
+  onCompanyClick?: () => void;
 }
 
 export interface CaseStudyProps {

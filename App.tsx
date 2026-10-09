@@ -44,15 +44,23 @@ import { ScrollReveal } from './components/ScrollReveal';
 
 const ALL_PROJECTS = [
   {
-    category: "Data & Business Analytics",
+    category: "Conversion Rate Optimization",
     items: [
-      { name: "End-to-End Business Analytics Case Study", url: "https://github.com/ramitmehta4/mock-business-analytics/tree/main/Project%20portfolio" }
+      { 
+        name: "CRO Max Fashion Audit", 
+        description: "Comprehensive e-commerce CRO audit and UX redesign experiments across product pages, mobile purchase flows, and conversion test variants in Figma.",
+        url: "https://www.figma.com/design/4JDiKefj6QGrQKaDx3aTyU/Untitled?node-id=0-1&t=XSX9MUutvIuf3b7M-1" 
+      },
+      { 
+        name: "CRO Strategy & Case Study Deck", 
+        url: "https://docs.google.com/presentation/d/19HJoeY1kJnaQCtohBQGWjbLTtQfOlOx4_g52JF7FHiU/edit?usp=sharing" 
+      }
     ]
   },
   {
-    category: "Conversion Rate Optimization",
+    category: "Data & Business Analytics",
     items: [
-      { name: "CRO Strategy & Case Study Deck", url: "https://docs.google.com/presentation/d/19HJoeY1kJnaQCtohBQGWjbLTtQfOlOx4_g52JF7FHiU/edit?usp=sharing" }
+      { name: "End-to-End Business Analytics Case Study", url: "https://github.com/ramitmehta4/mock-business-analytics/tree/main/Project%20portfolio" }
     ]
   },
   {
@@ -69,6 +77,20 @@ const ALL_PROJECTS = [
 // --- Components ---
 
 const ProjectsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
@@ -81,7 +103,7 @@ const ProjectsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
       <div className="relative z-10 bg-white rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 max-w-2xl w-full shadow-2xl border border-gray-100 transform transition-all duration-300 animate-in fade-in zoom-in-95 duration-300">
         <button 
           onClick={onClose}
-          className="absolute top-6 right-6 p-2 text-gray-400 hover:text-black transition-colors rounded-full hover:bg-gray-100"
+          className="absolute top-6 right-6 p-2 text-gray-400 hover:text-black transition-colors rounded-full hover:bg-gray-100 cursor-pointer"
           aria-label="Close modal"
         >
           <X size={24} />
@@ -106,12 +128,17 @@ const ProjectsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                     className="flex items-center justify-between p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-black hover:bg-white hover:shadow-lg transition-all group"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-white border border-gray-200 rounded-xl flex items-center justify-center text-gray-400 group-hover:text-black transition-colors">
-                        {group.category.includes("Data") || group.category.includes("Analytics") ? <BarChart size={18} /> : group.category.includes("CRO") ? <MousePointer2 size={18} /> : group.category.includes("SEO") ? <Globe size={18} /> : <Share2 size={18} />}
+                      <div className="w-10 h-10 bg-white border border-gray-200 rounded-xl flex items-center justify-center text-gray-400 group-hover:text-black transition-colors shrink-0">
+                        {project.url.includes("figma") ? <Figma size={18} /> : group.category.includes("Data") || group.category.includes("Analytics") ? <BarChart size={18} /> : group.category.includes("CRO") ? <MousePointer2 size={18} /> : group.category.includes("SEO") ? <Globe size={18} /> : <Share2 size={18} />}
                       </div>
-                      <span className="font-bold text-gray-800 text-sm sm:text-base">{project.name}</span>
+                      <div className="text-left">
+                        <span className="font-bold text-gray-800 text-sm sm:text-base block">{project.name}</span>
+                        {project.description && (
+                          <p className="text-xs text-gray-500 mt-1 font-normal leading-relaxed">{project.description}</p>
+                        )}
+                      </div>
                     </div>
-                    <ExternalLink size={18} className="text-gray-300 group-hover:text-black group-hover:translate-x-1 transition-all" />
+                    <ExternalLink size={18} className="text-gray-300 group-hover:text-black group-hover:translate-x-1 transition-all shrink-0 ml-3" />
                   </a>
                 ))}
               </div>
@@ -122,13 +149,187 @@ const ProjectsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
         <div className="mt-12 pt-8 border-t border-gray-100 flex justify-center">
           <button 
             onClick={onClose}
-            className="px-8 py-3 text-sm font-bold text-gray-400 hover:text-black transition-colors"
+            className="px-8 py-3 text-sm font-bold text-gray-400 hover:text-black transition-colors cursor-pointer"
           >
             Close Gallery
           </button>
         </div>
       </div>
     </div>
+  );
+};
+
+const CroProjectsModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+      <div 
+        className="fixed inset-0 bg-black/60 backdrop-blur-xl transition-opacity duration-300"
+        onClick={onClose}
+      />
+      
+      <div className="relative z-10 bg-white rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 max-w-xl w-full shadow-2xl border border-gray-100 transform transition-all duration-300 animate-in fade-in zoom-in-95">
+        <button 
+          onClick={onClose}
+          className="absolute top-6 right-6 p-2 text-gray-400 hover:text-black transition-colors rounded-full hover:bg-gray-100 cursor-pointer"
+          aria-label="Close modal"
+        >
+          <X size={24} />
+        </button>
+
+        <div className="mb-8">
+          <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 mb-2">CRO Projects</h3>
+          <p className="text-sm text-gray-500">Selected conversion rate optimization audits and presentations.</p>
+        </div>
+
+        <div className="space-y-4">
+          {/* Entry: CRO Max Fashion Audit (at top) */}
+          <a
+            href="https://www.figma.com/design/4JDiKefj6QGrQKaDx3aTyU/Untitled?node-id=0-1&t=XSX9MUutvIuf3b7M-1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block p-5 bg-gray-50 hover:bg-white rounded-2xl border border-gray-200 hover:border-[#0D99FF] hover:shadow-lg transition-all group"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="space-y-2 flex-1 text-left">
+                <div>
+                  <span className="inline-block px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-blue-100 text-[#0066CC]">
+                    Independent CRO audit
+                  </span>
+                  <p className="text-[11px] text-gray-500 italic mt-1">
+                    Independent work, separate from my OptiPhoenix role.
+                  </p>
+                </div>
+                <h4 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-[#0D99FF] transition-colors flex items-center gap-2">
+                  <span>CRO Max Fashion Audit</span>
+                  <Figma size={16} className="text-[#0D99FF]" />
+                </h4>
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+                  Comprehensive e-commerce CRO audit and UX redesign experiments across product pages, mobile purchase flows, and conversion test variants in Figma.
+                </p>
+              </div>
+              <div className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-400 group-hover:text-[#0D99FF] shrink-0 transition-colors">
+                <ExternalLink size={18} />
+              </div>
+            </div>
+          </a>
+
+          {/* Entry: Existing PPT project */}
+          <a
+            href="https://docs.google.com/presentation/d/19HJoeY1kJnaQCtohBQGWjbLTtQfOlOx4_g52JF7FHiU/edit?slide=id.p#slide=id.p"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block p-5 bg-gray-50 hover:bg-white rounded-2xl border border-gray-200 hover:border-black hover:shadow-lg transition-all group"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="space-y-2 flex-1 text-left">
+                <div>
+                  <span className="inline-block px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-slate-200 text-slate-800">
+                    Independent project
+                  </span>
+                  <p className="text-[11px] text-gray-500 italic mt-1">
+                    Independent work, separate from my OptiPhoenix role.
+                  </p>
+                </div>
+                <h4 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-black transition-colors">
+                  CRO Strategy & Case Study Deck
+                </h4>
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+                  Strategic CRO deck covering research hypotheses, test design, and uplift frameworks for top fashion brands.
+                </p>
+              </div>
+              <div className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-400 group-hover:text-black shrink-0 transition-colors">
+                <ExternalLink size={18} />
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div className="mt-8 pt-6 border-t border-gray-100 flex justify-end">
+          <button 
+            onClick={onClose}
+            className="px-6 py-2.5 text-sm font-semibold text-gray-500 hover:text-black transition-colors cursor-pointer"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const FigmaFeaturedBanner = () => {
+  return (
+    <section className="px-6 py-4 max-w-6xl mx-auto -mt-6 mb-12">
+      <ScrollReveal>
+        <div className="relative group">
+          {/* Figma-style frame label tab at top-left */}
+          <div className="absolute -top-3 left-6 z-20 flex items-center gap-1.5 px-3 py-0.5 bg-[#0D99FF] text-white text-[11px] font-semibold tracking-wide rounded shadow-xs">
+            <Figma size={12} className="shrink-0" />
+            <span>CRO Max Fashion Audit</span>
+          </div>
+
+          {/* Main frame container */}
+          <div className="relative rounded-2xl border border-[#0D99FF]/40 bg-[#fafbfc] p-6 sm:p-8 md:p-10 shadow-[0_4px_25px_-5px_rgba(13,153,255,0.12)] hover:shadow-[0_8px_30px_-5px_rgba(13,153,255,0.22)] hover:border-[#0D99FF] transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">
+            
+            {/* Subtle Figma canvas dot grid background */}
+            <div 
+              className="absolute inset-0 opacity-[0.04] pointer-events-none"
+              style={{
+                backgroundImage: 'radial-gradient(#000 1px, transparent 1px)',
+                backgroundSize: '16px 16px'
+              }}
+            />
+
+            {/* Corner handles (Figma frame selection handles) */}
+            <div className="absolute -top-1 -left-1 w-2.5 h-2.5 bg-white border border-[#0D99FF] rounded-[1px] shadow-xs" />
+            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-white border border-[#0D99FF] rounded-[1px] shadow-xs" />
+            <div className="absolute -bottom-1 -left-1 w-2.5 h-2.5 bg-white border border-[#0D99FF] rounded-[1px] shadow-xs" />
+            <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-white border border-[#0D99FF] rounded-[1px] shadow-xs" />
+
+            {/* Content row */}
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="space-y-2 max-w-2xl text-left">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  CRO Max Fashion Audit
+                </h3>
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                  Comprehensive UX audit: heuristic analysis, product page redesigns, and high-impact conversion experiments
+                </p>
+              </div>
+
+              <div className="flex items-center shrink-0">
+                <a
+                  href="https://www.figma.com/design/4JDiKefj6QGrQKaDx3aTyU/Untitled?node-id=0-1&t=XSX9MUutvIuf3b7M-1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-black hover:bg-[#0D99FF] text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 group/btn"
+                >
+                  <Figma size={16} className="text-[#0D99FF] group-hover/btn:text-white transition-colors" />
+                  <span>View in Figma</span>
+                  <ExternalLink size={15} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ScrollReveal>
+    </section>
   );
 };
 
@@ -314,7 +515,18 @@ const Navbar = () => {
   );
 };
 
-const ExperienceCard: React.FC<ExperienceCardProps> = ({ title, company, period, description, achievements, gradient, icon, link }) => {
+const ExperienceCard: React.FC<ExperienceCardProps> = ({ 
+  title, 
+  company, 
+  period, 
+  description, 
+  achievements, 
+  gradient, 
+  icon, 
+  link,
+  onCardClick,
+  onCompanyClick
+}) => {
   const CardContent = (
     <div className={`p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all h-full bg-gradient-to-br ${gradient} text-white`}>
       <div className="flex items-start justify-between mb-6">
@@ -325,9 +537,26 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ title, company, period,
       </div>
       <h3 className="text-xl font-bold mb-1 flex items-center gap-2">
         {title}
-        {link && <ExternalLink size={16} className="opacity-70" />}
+        {(link || onCardClick) && <ExternalLink size={16} className="opacity-70" />}
       </h3>
-      <p className="text-sm font-medium opacity-90 mb-4">{company}</p>
+      {onCompanyClick ? (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onCompanyClick();
+          }}
+          className="text-sm font-semibold opacity-95 hover:opacity-100 mb-4 inline-flex items-center gap-2 underline underline-offset-4 decoration-white/40 hover:decoration-white transition-all text-left cursor-pointer group/co"
+          title="Click to view CRO projects"
+        >
+          <span>{company}</span>
+          <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-sm group-hover/co:bg-white group-hover/co:text-black transition-colors">
+            View Projects
+          </span>
+        </button>
+      ) : (
+        <p className="text-sm font-medium opacity-90 mb-4">{company}</p>
+      )}
       <p className="text-sm opacity-80 mb-6 leading-relaxed">{description}</p>
       <ul className="space-y-2">
         {achievements.map((item, idx) => (
@@ -339,6 +568,25 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ title, company, period,
       </ul>
     </div>
   );
+
+  if (onCardClick) {
+    return (
+      <div 
+        onClick={onCardClick} 
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onCardClick();
+          }
+        }}
+        className="block hover:-translate-y-1 transition-transform h-full cursor-pointer text-left w-full"
+      >
+        {CardContent}
+      </div>
+    );
+  }
 
   if (link) {
     return (
@@ -414,16 +662,22 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ header, period, link, challenge, 
                   const isObject = typeof p === 'object' && p !== null;
                   const name = isObject ? (p as any).name : p;
                   const url = isObject ? (p as any).url : null;
+                  const description = isObject ? (p as any).description : null;
 
                   const cardContent = (
                     <div className={`p-4 bg-gray-50 rounded-xl border border-gray-100 text-sm font-medium text-gray-700 h-full flex items-center justify-between transition-all ${url ? 'hover:bg-gray-100 hover:border-gray-300' : ''}`}>
-                      <span>{name}</span>
-                      {url && <ExternalLink size={14} className="text-gray-400 ml-2" />}
+                      <div className="flex-1 pr-2">
+                        <span className="font-semibold text-gray-900 block">{name}</span>
+                        {description && (
+                          <p className="text-xs text-gray-500 mt-1 font-normal leading-relaxed">{description}</p>
+                        )}
+                      </div>
+                      {url && <ExternalLink size={14} className="text-gray-400 ml-2 shrink-0 group-hover:text-black transition-colors" />}
                     </div>
                   );
 
                   return url ? (
-                    <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="block no-underline group">
+                    <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="block no-underline group h-full">
                       {cardContent}
                     </a>
                   ) : <div key={i}>{cardContent}</div>;
@@ -473,7 +727,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ header, period, link, challenge, 
   </ScrollReveal>
 );
 
-const TimelineItem = ({ year, title, description, isRight }: { year: string; title: string; description: string; isRight: boolean }) => (
+const TimelineItem = ({ year, title, description, isRight }: { year: string; title: string; description: React.ReactNode; isRight: boolean }) => (
   <ScrollReveal className={`relative flex items-center justify-between mb-12 w-full ${isRight ? 'flex-row-reverse' : ''}`}>
     <div className="hidden md:block w-5/12"></div>
     <div className="z-20 flex items-center justify-center w-10 h-10 bg-white border-2 border-gray-300 rounded-full shrink-0">
@@ -482,7 +736,7 @@ const TimelineItem = ({ year, title, description, isRight }: { year: string; tit
     <div className={`w-full md:w-5/12 p-6 bg-white rounded-2xl shadow-sm border border-gray-100 ${isRight ? 'md:text-right' : 'md:text-left'}`}>
       <span className="text-xs font-bold text-gray-400 tracking-widest uppercase mb-1 block">{year}</span>
       <h4 className="text-lg font-bold text-gray-900 mb-2">{title}</h4>
-      <p className="text-sm text-gray-600">{description}</p>
+      <div className="text-sm text-gray-600">{description}</div>
     </div>
   </ScrollReveal>
 );
@@ -493,6 +747,7 @@ export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isProjectsModalOpen, setIsProjectsModalOpen] = useState(false);
+  const [isCroProjectsModalOpen, setIsCroProjectsModalOpen] = useState(false);
 
   useEffect(() => {
     const checkScrollTop = () => {
@@ -532,6 +787,7 @@ export default function App() {
       <Navbar />
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
       <ProjectsModal isOpen={isProjectsModalOpen} onClose={() => setIsProjectsModalOpen(false)} />
+      <CroProjectsModal isOpen={isCroProjectsModalOpen} onClose={() => setIsCroProjectsModalOpen(false)} />
 
       {/* Hero Section */}
       <section id="about" className="pt-32 pb-20 px-6 bg-gradient-to-b from-gray-50 to-white overflow-hidden scroll-mt-20">
@@ -549,13 +805,13 @@ export default function App() {
             <div className="flex flex-col sm:flex-row gap-4">
               <button 
                 onClick={handleViewProjects}
-                className="px-8 py-4 bg-black text-white rounded-full font-semibold transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:-translate-y-1 hover:shadow-2xl text-center shadow-lg shadow-black/10 flex-1 sm:flex-none"
+                className="px-8 py-4 bg-black text-white rounded-full font-semibold transition-all duration-300 ease-in-out hover:bg-gray-800 hover:scale-105 hover:-translate-y-1 hover:shadow-2xl text-center shadow-lg shadow-black/10 flex-1 sm:flex-none cursor-pointer"
               >
                 View Projects
               </button>
               <button 
                 onClick={() => setIsContactModalOpen(true)}
-                className="px-8 py-4 bg-white border border-gray-200 text-gray-900 rounded-full font-semibold transition-all duration-300 ease-in-out hover:border-black hover:scale-105 hover:-translate-y-1 hover:shadow-xl text-center flex-1 sm:flex-none"
+                className="px-8 py-4 bg-white border border-gray-200 text-gray-900 rounded-full font-semibold transition-all duration-300 ease-in-out hover:border-black hover:scale-105 hover:-translate-y-1 hover:shadow-xl text-center flex-1 sm:flex-none cursor-pointer"
               >
                 Get in Touch
               </button>
@@ -593,13 +849,16 @@ export default function App() {
         <div className="flex justify-center mt-20 animate-bounce">
           <button 
             onClick={scrollToJourney}
-            className="p-2 text-gray-300 hover:text-black transition-colors"
+            className="p-2 text-gray-300 hover:text-black transition-colors cursor-pointer"
             aria-label="Scroll to journey"
           >
             <ChevronDown size={32} />
           </button>
         </div>
       </section>
+
+      {/* Featured Banner (CRO Max Fashion Audit - Figma Frame) */}
+      <FigmaFeaturedBanner />
 
       {/* Journey Timeline */}
       <section id="journey" className="py-24 px-6 bg-gray-50 scroll-mt-20">
@@ -613,7 +872,25 @@ export default function App() {
             <TimelineItem year="2023" title="Digital Foundation" description="Upgrad Digital Marketing Course." isRight={false} />
             <TimelineItem year="Oct 2023 – Jan 2024" title="Cars24 Growth Analytics" description="UAE automotive growth strategy." isRight={true} />
             <TimelineItem year="Mar 2024 – Dec 2024" title="E-commerce Analytics" description="Amazon, Flipkart, Meesho management." isRight={false} />
-            <TimelineItem year="2025" title="CRO & Data Analysis" description="Optimization for major brands." isRight={true} />
+            <TimelineItem 
+              year="2025" 
+              title="CRO & Data Analysis" 
+              description={
+                <span>
+                  Optimization for major brands at{' '}
+                  <button 
+                    type="button" 
+                    onClick={() => setIsCroProjectsModalOpen(true)} 
+                    className="font-semibold text-gray-900 underline decoration-gray-400 hover:decoration-black hover:text-black transition-colors cursor-pointer"
+                    title="View CRO projects"
+                  >
+                    OptiPhoenix Xperts
+                  </button>
+                  .
+                </span>
+              } 
+              isRight={true} 
+            />
             <TimelineItem year="Now" title="AI-Driven Analytics" description="Vibe coding & marketing automation." isRight={false} />
           </div>
         </div>
@@ -628,11 +905,15 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <ScrollReveal>
               <ExperienceCard 
-                title="CRO Analyst/Strategist" company="OptiPhoenix Xperts Pvt. Ltd." period="2025" icon={<TrendingUp size={24} />}
+                title="CRO Analyst/Strategist" 
+                company="OptiPhoenix Xperts Pvt. Ltd." 
+                period="2025" 
+                icon={<TrendingUp size={24} />}
                 description="Led CRO initiatives for Top Indian fashion brands."
                 achievements={["20-50% conversion rate uplift", "Competitor Analyses & User Research", "Mastered: Convert, GA4, Adobe Analytics, Figma"]}
                 gradient="from-slate-600 to-slate-800"
-                link="https://docs.google.com/presentation/d/19HJoeY1kJnaQCtohBQGWjbLTtQfOlOx4_g52JF7FHiU/edit?slide=id.p#slide=id.p"
+                onCardClick={() => setIsCroProjectsModalOpen(true)}
+                onCompanyClick={() => setIsCroProjectsModalOpen(true)}
               />
             </ScrollReveal>
             <ScrollReveal>
@@ -672,6 +953,16 @@ export default function App() {
           </div>
 
           <CaseStudy 
+            id="cro" header="20-50% Conversions for Indian Brands" icon={<BarChart size={24} />}
+            gradient="from-slate-600 to-slate-800"
+            challenge="Plateau in e-commerce conversion rates despite high traffic volumes for major fashion brands."
+            approach="Quantitative and qualitative data analysis, competitor benchmarking, and A/B test design."
+            results={["20-30% Average Uplift", "50% Peak Performance", "15+ Successful Tests"]}
+            tools={["Convert", "GA4", "ContentSquare", "Figma", "Crazy Egg", "Adobe Analytics"]}
+            projects={ALL_PROJECTS[0].items}
+          />
+
+          <CaseStudy 
             id="analytics-case-study" 
             header="Independent Portfolio Project — End-to-End Business Analytics Case Study" 
             period="Jan 2026 – Present"
@@ -683,16 +974,6 @@ export default function App() {
             execution="Built using Python, SQL, Tableau, and Excel, with AI-assisted development workflows to perform statistical audits of A/B tests and diagnose root causes of cart abandonment."
             results={["Funnel & Segment Diagnosis", "A/B Test Statistical Auditing", "Cart-Abandonment Root-Cause Analysis"]}
             tools={["Python", "SQL", "Tableau", "Excel", "AI-Assisted Workflows", "Statistical Analysis"]}
-            projects={ALL_PROJECTS[0].items}
-          />
-
-          <CaseStudy 
-            id="cro" header="20-50% Conversions for Indian Brands" icon={<BarChart size={24} />}
-            gradient="from-slate-600 to-slate-800"
-            challenge="Plateau in e-commerce conversion rates despite high traffic volumes for major fashion brands."
-            approach="Quantitative and qualitative data analysis, competitor benchmarking, and A/B test design."
-            results={["20-30% Average Uplift", "50% Peak Performance", "15+ Successful Tests"]}
-            tools={["Convert", "GA4", "ContentSquare", "Figma", "Crazy Egg", "Adobe Analytics"]}
             projects={ALL_PROJECTS[1].items}
           />
 
