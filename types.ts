@@ -20,15 +20,30 @@ export interface ExperienceCardProps {
   onCompanyClick?: () => void;
 }
 
+export interface ExampleTestItem {
+  title: string;
+  context: string;
+  problem: string;
+  change: string;
+  result: string;
+  learning?: string;
+}
+
 export interface CaseStudyProps {
   id: string;
   header: string;
+  note?: string;
   period?: string;
   link?: string;
   challenge: string;
   approach?: string;
   execution?: string;
+  exampleTests?: {
+    intro: string;
+    items: ExampleTestItem[];
+  };
   results: string[];
+  resultsFootnote?: string;
   learnings?: string;
   tools?: string[];
   projects?: (string | ProjectItem)[];

@@ -603,7 +603,23 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
   );
 };
 
-const CaseStudy: React.FC<CaseStudyProps> = ({ header, period, link, challenge, approach, execution, results, learnings, tools, projects, gradient, icon }) => (
+const CaseStudy: React.FC<CaseStudyProps> = ({ 
+  header, 
+  note,
+  period, 
+  link, 
+  challenge, 
+  approach, 
+  execution, 
+  exampleTests,
+  results, 
+  resultsFootnote,
+  learnings, 
+  tools, 
+  projects, 
+  gradient, 
+  icon 
+}) => (
   <ScrollReveal className="mb-16 last:mb-0">
     <div className={`rounded-3xl overflow-hidden border border-gray-100 shadow-sm bg-white`}>
       <div className={`p-8 md:p-12 bg-gradient-to-br ${gradient} text-white flex flex-col md:flex-row md:items-center justify-between gap-6`}>
@@ -619,6 +635,11 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ header, period, link, challenge, 
             )}
           </div>
           <h3 className="text-2xl md:text-3xl font-bold leading-tight">{header}</h3>
+          {note && (
+            <p className="mt-2 text-xs text-white/75 font-normal tracking-wide italic">
+              {note}
+            </p>
+          )}
         </div>
         {link && (
           <a
@@ -644,6 +665,35 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ header, period, link, challenge, 
             <div>
               <h4 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-3">Approach</h4>
               <p className="text-gray-600 leading-relaxed">{approach}</p>
+            </div>
+          )}
+
+          {exampleTests && (
+            <div>
+              <h4 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-1">Three Example Tests</h4>
+              <p className="text-xs text-gray-500 mb-4">{exampleTests.intro}</p>
+              <div className="space-y-4">
+                {exampleTests.items.map((test, idx) => (
+                  <div key={idx} className="p-5 bg-gray-50/90 rounded-2xl border border-gray-100 hover:border-gray-200 transition-all">
+                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 mb-2.5">
+                      <h5 className="font-bold text-gray-900 text-sm">{test.title}</h5>
+                      <span className="text-[11px] font-medium text-gray-500 bg-white px-2.5 py-0.5 rounded-md border border-gray-100 shrink-0">
+                        {test.context}
+                      </span>
+                    </div>
+                    <div className="space-y-1.5 text-xs text-gray-700 leading-relaxed">
+                      <p><span className="font-semibold text-gray-900">Problem:</span> {test.problem}</p>
+                      <p><span className="font-semibold text-gray-900">Change:</span> {test.change}</p>
+                      <p className="font-medium text-gray-900 pt-0.5"><span className="font-bold text-emerald-700">Result:</span> {test.result}</p>
+                      {test.learning && (
+                        <p className="text-[11px] text-gray-500 italic pt-0.5">
+                          <span className="font-medium not-italic text-gray-500">Learning:</span> {test.learning}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
@@ -697,16 +747,21 @@ const CaseStudy: React.FC<CaseStudyProps> = ({ header, period, link, challenge, 
         <div className="md:col-span-5 space-y-8">
           <div className="p-8 bg-gray-50 rounded-2xl">
             <h4 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-6">Measurable Results</h4>
-            <ul className="space-y-6">
+            <ul className="space-y-5">
               {results.map((res, i) => (
-                <li key={i} className="flex items-start space-x-4">
-                  <div className="mt-1 p-1 bg-green-100 text-green-600 rounded-full">
+                <li key={i} className="flex items-start space-x-3.5">
+                  <div className="mt-1 p-1 bg-green-100 text-green-600 rounded-full shrink-0">
                     <ArrowRight size={14} />
                   </div>
-                  <span className="text-xl font-bold text-gray-900">{res}</span>
+                  <span className="text-base sm:text-lg font-bold text-gray-900 leading-snug">{res}</span>
                 </li>
               ))}
             </ul>
+            {resultsFootnote && (
+              <p className="mt-6 pt-4 border-t border-gray-200/60 text-xs text-gray-500 italic leading-relaxed">
+                {resultsFootnote}
+              </p>
+            )}
           </div>
 
           {tools && (
@@ -834,9 +889,9 @@ export default function App() {
                   <div className="p-1.5 bg-green-100 text-green-600 rounded-lg">
                     <TrendingUp size={20} />
                   </div>
-                  <span className="text-3xl font-extrabold text-gray-900 tracking-tighter">50%</span>
+                  <span className="text-3xl font-extrabold text-gray-900 tracking-tighter">15+</span>
                 </div>
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Peak CRO Uplift</p>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Successful Tests</p>
               </div>
 
               <div className="absolute -top-10 -right-6 w-16 h-16 bg-white/50 backdrop-blur-sm rounded-full border border-gray-100 flex items-center justify-center -z-10 animate-bounce">
@@ -909,8 +964,8 @@ export default function App() {
                 company="OptiPhoenix Xperts Pvt. Ltd." 
                 period="2025" 
                 icon={<TrendingUp size={24} />}
-                description="Led CRO initiatives for Top Indian fashion brands."
-                achievements={["20-50% conversion rate uplift", "Competitor Analyses & User Research", "Mastered: Convert, GA4, Adobe Analytics, Figma"]}
+                description="Ran CRO experiments for fashion and D2C brands."
+                achievements={["15+ successful A/B tests across fashion and D2C brands", "Competitor Analyses & User Research", "Tools: Convert, GA4, Adobe Analytics, Figma"]}
                 gradient="from-slate-600 to-slate-800"
                 onCardClick={() => setIsCroProjectsModalOpen(true)}
                 onCompanyClick={() => setIsCroProjectsModalOpen(true)}
@@ -953,11 +1008,48 @@ export default function App() {
           </div>
 
           <CaseStudy 
-            id="cro" header="20-50% Conversions for Indian Brands" icon={<BarChart size={24} />}
+            id="cro" 
+            header="CRO Experiments for Fashion and D2C Brands" 
+            note="Brand names are not shown due to non-disclosure agreements."
+            icon={<BarChart size={24} />}
             gradient="from-slate-600 to-slate-800"
-            challenge="Plateau in e-commerce conversion rates despite high traffic volumes for major fashion brands."
-            approach="Quantitative and qualitative data analysis, competitor benchmarking, and A/B test design."
-            results={["20-30% Average Uplift", "50% Peak Performance", "15+ Successful Tests"]}
+            challenge="Shoppers were dropping off at key decision points (cart, size selection and mini-cart) even where traffic was healthy."
+            approach="Behavioural data (heatmaps, session recordings, surveys), competitor benchmarking and A/B test design to find friction and test one change at a time."
+            exampleTests={{
+              intro: "Three examples from 15+ successful A/B tests.",
+              items: [
+                {
+                  title: "Cart product selector",
+                  context: "Indian ethnic-wear marketplace, about 40,000 to 50,000 daily users",
+                  problem: "shoppers used the cart as a wishlist and deleted unwanted items before checkout, and many dropped off.",
+                  change: "added a product selector so shoppers could check out only the items they wanted, with return and shipping reassurance and trust badges near the top of the cart.",
+                  result: "conversion up about 5.2% and cart abandonment down about 11% (relative change).",
+                  learning: "the cart worked better once it supported how shoppers actually used it."
+                },
+                {
+                  title: "Size-guide placement on the product page",
+                  context: "D2C fashion store, European market, over 100,000 daily users",
+                  problem: "the size guide sat below the size selector, so shoppers hesitated while choosing a size.",
+                  change: "moved the size guide next to the size selector so the chart was one tap away.",
+                  result: "conversion up about 3 to 3.5%, statistically significant.",
+                  learning: "help at the point of decision beat adding more content."
+                },
+                {
+                  title: "Free-gift progress bar",
+                  context: "D2C hair-care brand, about 6,000 to 8,000 daily users",
+                  problem: "the mini-cart didn't show shoppers what gift they would earn at each milestone.",
+                  change: "redesigned it to show the actual gift at each milestone, with tighter spacing and a countdown timer.",
+                  result: "checkouts and conversion up about 6%, statistically significant."
+                }
+              ]
+            }}
+            results={[
+              "15+ Successful A/B Tests",
+              "+5.2% conversion (cart selector)",
+              "+3 to 3.5% conversion (size guide)",
+              "+6% conversion (free-gift bar)"
+            ]}
+            resultsFootnote="Highlighted results are relative changes in conversion rate from three of these tests."
             tools={["Convert", "GA4", "ContentSquare", "Figma", "Crazy Egg", "Adobe Analytics"]}
             projects={ALL_PROJECTS[0].items}
           />
