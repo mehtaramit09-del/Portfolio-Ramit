@@ -619,7 +619,18 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
   projects, 
   gradient, 
   icon 
-}) => (
+}) => {
+  // State for which example test dropdowns are open
+  const [openTests, setOpenTests] = useState<{ [key: number]: boolean }>({});
+
+  const toggleTest = (idx: number) => {
+    setOpenTests(prev => ({
+      ...prev,
+      [idx]: !prev[idx]
+    }));
+  };
+
+  return (
   <ScrollReveal className="mb-16 last:mb-0">
     <div className={`rounded-3xl overflow-hidden border border-gray-100 shadow-sm bg-white`}>
       <div className={`p-8 md:p-12 bg-gradient-to-br ${gradient} text-white flex flex-col md:flex-row md:items-center justify-between gap-6`}>
@@ -670,29 +681,75 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
           {exampleTests && (
             <div>
-              <h4 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-1">Three Example Tests</h4>
-              <p className="text-xs text-gray-500 mb-4">{exampleTests.intro}</p>
-              <div className="space-y-4">
-                {exampleTests.items.map((test, idx) => (
-                  <div key={idx} className="p-5 bg-gray-50/90 rounded-2xl border border-gray-100 hover:border-gray-200 transition-all">
-                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 mb-2.5">
-                      <h5 className="font-bold text-gray-900 text-sm">{test.title}</h5>
-                      <span className="text-[11px] font-medium text-gray-500 bg-white px-2.5 py-0.5 rounded-md border border-gray-100 shrink-0">
-                        {test.context}
-                      </span>
-                    </div>
-                    <div className="space-y-1.5 text-xs text-gray-700 leading-relaxed">
-                      <p><span className="font-semibold text-gray-900">Problem:</span> {test.problem}</p>
-                      <p><span className="font-semibold text-gray-900">Change:</span> {test.change}</p>
-                      <p className="font-medium text-gray-900 pt-0.5"><span className="font-bold text-emerald-700">Result:</span> {test.result}</p>
-                      {test.learning && (
-                        <p className="text-[11px] text-gray-500 italic pt-0.5">
-                          <span className="font-medium not-italic text-gray-500">Learning:</span> {test.learning}
-                        </p>
+              <div className="flex items-baseline justify-between mb-1.5">
+                <h4 className="text-sm font-bold uppercase tracking-widest text-gray-400">Three Example Tests</h4>
+                <span className="text-[11px] text-gray-400 font-medium">Click to expand</span>
+              </div>
+              <p className="text-xs text-gray-500 mb-3.5">{exampleTests.intro}</p>
+              
+              <div className="space-y-2.5">
+                {exampleTests.items.map((test, idx) => {
+                  const isOpen = !!openTests[idx];
+                  return (
+                    <div 
+                      key={idx} 
+                      className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+                        isOpen 
+                          ? 'bg-gray-50/90 border-gray-300 shadow-sm' 
+                          : 'bg-white border-gray-200 hover:border-gray-300 hover:bg-gray-50/50'
+                      }`}
+                    >
+                      {/* Accordion / Dropdown Header Button */}
+                      <button
+                        type="button"
+                        onClick={() => toggleTest(idx)}
+                        aria-expanded={isOpen}
+                        className="w-full text-left p-4 sm:p-4.5 flex items-center justify-between gap-3 transition-colors select-none focus:outline-none"
+                      >
+                        <div className="flex-1 min-w-0 pr-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="font-bold text-gray-900 text-sm">
+                              {test.title}
+                            </span>
+                            <span className="text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200/60 shrink-0">
+                              Win
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-gray-500 truncate mt-0.5 font-normal">
+                            {test.context}
+                          </p>
+                        </div>
+                        
+                        <div className={`p-1.5 rounded-full text-gray-500 transition-transform duration-200 shrink-0 ${isOpen ? 'rotate-180 bg-gray-200/80 text-gray-900' : 'bg-gray-100 group-hover:bg-gray-200'}`}>
+                          <ChevronDown size={16} />
+                        </div>
+                      </button>
+
+                      {/* Dropdown Content */}
+                      {isOpen && (
+                        <div className="px-4 pb-4.5 sm:px-4.5 sm:pb-4.5 pt-0 border-t border-gray-200/70 text-xs text-gray-700 space-y-2.5 mt-1 bg-white/70">
+                          <div className="pt-2.5 text-[11px] text-gray-500 font-medium pb-1">
+                            <span className="text-gray-400 uppercase tracking-wider text-[10px] block font-bold mb-0.5">Test Context</span>
+                            {test.context}
+                          </div>
+                          
+                          <div className="space-y-1.5 leading-relaxed bg-gray-50/80 p-3 rounded-xl border border-gray-100">
+                            <p><span className="font-semibold text-gray-900">Problem:</span> {test.problem}</p>
+                            <p><span className="font-semibold text-gray-900">Change:</span> {test.change}</p>
+                            <p className="font-medium text-gray-900 pt-0.5">
+                              <span className="font-bold text-emerald-700">Result:</span> {test.result}
+                            </p>
+                            {test.learning && (
+                              <p className="text-[11px] text-gray-500 italic pt-1 border-t border-gray-200/60 mt-1.5">
+                                <span className="font-medium not-italic text-gray-600">Learning:</span> {test.learning}
+                              </p>
+                            )}
+                          </div>
+                        </div>
                       )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
@@ -780,21 +837,62 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
       </div>
     </div>
   </ScrollReveal>
-);
+  );
+};
 
-const TimelineItem = ({ year, title, description, isRight }: { year: string; title: string; description: React.ReactNode; isRight: boolean }) => (
-  <ScrollReveal className={`relative flex items-center justify-between mb-12 w-full ${isRight ? 'flex-row-reverse' : ''}`}>
-    <div className="hidden md:block w-5/12"></div>
-    <div className="z-20 flex items-center justify-center w-10 h-10 bg-white border-2 border-gray-300 rounded-full shrink-0">
-      <div className="w-3 h-3 bg-gray-600 rounded-full"></div>
-    </div>
-    <div className={`w-full md:w-5/12 p-6 bg-white rounded-2xl shadow-sm border border-gray-100 ${isRight ? 'md:text-right' : 'md:text-left'}`}>
-      <span className="text-xs font-bold text-gray-400 tracking-widest uppercase mb-1 block">{year}</span>
-      <h4 className="text-lg font-bold text-gray-900 mb-2">{title}</h4>
-      <div className="text-sm text-gray-600">{description}</div>
-    </div>
-  </ScrollReveal>
-);
+interface JourneyStep {
+  year: string;
+  title: string;
+  description?: string;
+  renderDescription?: (openCro: () => void) => React.ReactNode;
+  isCurrent?: boolean;
+}
+
+const JOURNEY_STEPS: JourneyStep[] = [
+  {
+    year: "2023",
+    title: "Digital Foundation",
+    description: "Upgrad Digital Marketing Course.",
+    isCurrent: false,
+  },
+  {
+    year: "Oct 2023 – Jan 2024",
+    title: "Cars24 Growth Analytics",
+    description: "UAE automotive growth strategy.",
+    isCurrent: false,
+  },
+  {
+    year: "Mar 2024 – Dec 2024",
+    title: "E-commerce Analytics",
+    description: "Amazon, Flipkart, Meesho management.",
+    isCurrent: false,
+  },
+  {
+    year: "2025",
+    title: "CRO & Data Analysis",
+    renderDescription: (openCro: () => void) => (
+      <span>
+        Optimization for major brands at{' '}
+        <button 
+          type="button" 
+          onClick={openCro} 
+          className="font-semibold text-gray-900 underline decoration-gray-400 hover:decoration-black hover:text-black transition-colors cursor-pointer"
+          title="View CRO projects"
+        >
+          OptiPhoenix Xperts
+        </button>
+        .
+      </span>
+    ),
+    isCurrent: false,
+  },
+  {
+    year: "Now",
+    title: "AI-Driven Analytics",
+    description: "Vibe coding & marketing automation.",
+    isCurrent: true,
+  },
+];
 
 // --- Main App ---
 
@@ -916,38 +1014,124 @@ export default function App() {
       <FigmaFeaturedBanner />
 
       {/* Journey Timeline */}
-      <section id="journey" className="py-24 px-6 bg-gray-50 scroll-mt-20">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 tracking-tight">The Journey</h2>
-            <p className="text-gray-500">A path of continuous learning and adaptation</p>
+      <section id="journey" className="py-12 md:py-20 lg:py-24 px-4 sm:px-6 bg-gray-50 scroll-mt-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-2 tracking-tight">The Journey</h2>
+            <p className="text-xs sm:text-sm text-gray-500">A path of continuous learning and adaptation</p>
           </div>
-          <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gray-200 hidden md:block"></div>
-            <TimelineItem year="2023" title="Digital Foundation" description="Upgrad Digital Marketing Course." isRight={false} />
-            <TimelineItem year="Oct 2023 – Jan 2024" title="Cars24 Growth Analytics" description="UAE automotive growth strategy." isRight={true} />
-            <TimelineItem year="Mar 2024 – Dec 2024" title="E-commerce Analytics" description="Amazon, Flipkart, Meesho management." isRight={false} />
-            <TimelineItem 
-              year="2025" 
-              title="CRO & Data Analysis" 
-              description={
-                <span>
-                  Optimization for major brands at{' '}
-                  <button 
-                    type="button" 
-                    onClick={() => setIsCroProjectsModalOpen(true)} 
-                    className="font-semibold text-gray-900 underline decoration-gray-400 hover:decoration-black hover:text-black transition-colors cursor-pointer"
-                    title="View CRO projects"
-                  >
-                    OptiPhoenix Xperts
-                  </button>
-                  .
-                </span>
-              } 
-              isRight={true} 
-            />
-            <TimelineItem year="Now" title="AI-Driven Analytics" description="Vibe coding & marketing automation." isRight={false} />
-          </div>
+
+          <ScrollReveal>
+            {/* Desktop / PC Horizontal View */}
+            <div className="hidden md:block">
+              <div className="overflow-x-auto no-scrollbar pb-2">
+                <div className="min-w-[760px] lg:min-w-0">
+                  {/* Track and Milestone Nodes */}
+                  <div className="relative mb-6">
+                    {/* Connecting line between the 5 nodes */}
+                    <div className="absolute top-1/2 left-[10%] right-[10%] -translate-y-1/2 h-0.5 bg-gray-200 -z-0"></div>
+                    <div className="grid grid-cols-5 relative z-10">
+                      {JOURNEY_STEPS.map((step, idx) => (
+                        <div key={idx} className="flex justify-center">
+                          <div className={`w-7 h-7 rounded-full bg-white border-2 flex items-center justify-center transition-all ${
+                            step.isCurrent 
+                              ? 'border-emerald-500 shadow-sm ring-4 ring-emerald-50' 
+                              : 'border-gray-300 hover:border-gray-400'
+                          }`}>
+                            <div className={`w-2.5 h-2.5 rounded-full ${
+                              step.isCurrent ? 'bg-emerald-500 animate-pulse' : 'bg-gray-700'
+                            }`}></div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Horizontal Cards Grid */}
+                  <div className="grid grid-cols-5 gap-3.5 lg:gap-4">
+                    {JOURNEY_STEPS.map((step, idx) => (
+                      <div 
+                        key={idx} 
+                        className={`p-4 lg:p-5 bg-white rounded-2xl border transition-all flex flex-col justify-between text-left ${
+                          step.isCurrent 
+                            ? 'border-emerald-200/90 shadow-2xs ring-1 ring-emerald-100/70 hover:shadow-md' 
+                            : 'border-gray-100 shadow-2xs hover:border-gray-200 hover:shadow-sm'
+                        }`}
+                      >
+                        <div>
+                          <div className="flex items-center justify-between gap-1 mb-2">
+                            <span className={`text-[10px] lg:text-[11px] font-bold tracking-widest uppercase ${
+                              step.isCurrent ? 'text-emerald-600 font-extrabold' : 'text-gray-400'
+                            }`}>
+                              {step.year}
+                            </span>
+                            {step.isCurrent && (
+                              <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                Current
+                              </span>
+                            )}
+                          </div>
+                          <h4 className="text-sm font-bold text-gray-900 mb-1.5 leading-snug">
+                            {step.title}
+                          </h4>
+                        </div>
+                        <div className="text-xs text-gray-600 leading-relaxed mt-2 pt-2 border-t border-gray-50">
+                          {step.renderDescription ? step.renderDescription(() => setIsCroProjectsModalOpen(true)) : step.description}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile Compact Vertical View */}
+            <div className="block md:hidden">
+              <div className="relative pl-7 space-y-3">
+                {/* Slim vertical line down the left */}
+                <div className="absolute left-2.5 top-2.5 bottom-2.5 w-0.5 bg-gray-200"></div>
+
+                {JOURNEY_STEPS.map((step, idx) => (
+                  <div key={idx} className="relative flex items-start">
+                    {/* Compact node marker on the line */}
+                    <div className={`absolute -left-7 top-3 w-5 h-5 rounded-full bg-white border-2 flex items-center justify-center z-10 ${
+                      step.isCurrent ? 'border-emerald-500 ring-2 ring-emerald-50' : 'border-gray-300'
+                    }`}>
+                      <div className={`w-1.5 h-1.5 rounded-full ${
+                        step.isCurrent ? 'bg-emerald-500 animate-pulse' : 'bg-gray-600'
+                      }`}></div>
+                    </div>
+
+                    {/* Compact Card */}
+                    <div className={`w-full p-3 bg-white rounded-xl border text-left transition-all ${
+                      step.isCurrent 
+                        ? 'border-emerald-200/90 shadow-2xs ring-1 ring-emerald-100/50' 
+                        : 'border-gray-100 shadow-2xs'
+                    }`}>
+                      <div className="flex items-center justify-between gap-1.5 mb-1">
+                        <span className={`text-[10px] font-bold tracking-wider uppercase ${
+                          step.isCurrent ? 'text-emerald-600 font-extrabold' : 'text-gray-400'
+                        }`}>
+                          {step.year}
+                        </span>
+                        {step.isCurrent && (
+                          <span className="inline-flex items-center px-1.5 py-0.2 rounded-full text-[9px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            Current
+                          </span>
+                        )}
+                      </div>
+                      <h4 className="text-xs font-bold text-gray-900 mb-0.5 leading-snug">
+                        {step.title}
+                      </h4>
+                      <div className="text-[11px] text-gray-600 leading-snug">
+                        {step.renderDescription ? step.renderDescription(() => setIsCroProjectsModalOpen(true)) : step.description}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
