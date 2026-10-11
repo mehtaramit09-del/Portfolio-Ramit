@@ -32,6 +32,7 @@ export interface ExampleTestItem {
 export interface CaseStudyProps {
   id: string;
   header: string;
+  summary?: string;
   note?: string;
   period?: string;
   link?: string;
@@ -51,4 +52,6 @@ export interface CaseStudyProps {
   skills?: string[];
   gradient: string;
   icon: React.ReactNode;
+  isMobileOpen?: boolean;
+  onToggleMobile?: () => void;
 }
