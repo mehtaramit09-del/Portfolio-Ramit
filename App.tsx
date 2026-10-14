@@ -737,8 +737,12 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
                             <span className="font-bold text-gray-900 text-xs sm:text-sm">
                               {test.title}
                             </span>
-                            <span className="text-[9px] sm:text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-1.5 py-0.2 sm:px-2 sm:py-0.5 rounded border border-emerald-200/60 shrink-0">
-                              Win
+                            <span className={`text-[9px] sm:text-[10px] font-semibold px-1.5 py-0.2 sm:px-2 sm:py-0.5 rounded border shrink-0 ${
+                              test.badge === 'Inconclusive'
+                                ? 'text-amber-800 bg-amber-50 border-amber-200/80'
+                                : 'text-emerald-800 bg-emerald-50 border-emerald-200/60'
+                            }`}>
+                              {test.badge || 'Win'}
                             </span>
                           </div>
                           <p className="text-[10px] sm:text-[11px] text-gray-500 truncate mt-0.5 font-normal">
@@ -763,7 +767,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
                             <p><span className="font-semibold text-gray-900">Problem:</span> {test.problem}</p>
                             <p><span className="font-semibold text-gray-900">Change:</span> {test.change}</p>
                             <p className="font-medium text-gray-900 pt-0.5">
-                              <span className="font-bold text-emerald-700">Result:</span> {test.result}
+                              <span className={`font-bold ${test.badge === 'Inconclusive' ? 'text-amber-700' : 'text-emerald-700'}`}>Result:</span> {test.result}
                             </p>
                             {test.learning && (
                               <p className="text-[10px] sm:text-[11px] text-gray-500 italic pt-1 border-t border-gray-200/60 mt-1">
@@ -1328,23 +1332,24 @@ export default function App() {
               items: [
                 {
                   title: "Cart product selector",
-                  context: "Indian ethnic-wear marketplace, about 40,000 to 50,000 daily users",
+                  context: "Indian ethnic-wear marketplace, about 1,100 to 1,300 daily users",
                   problem: "shoppers used the cart as a wishlist and deleted unwanted items before checkout, and many dropped off.",
                   change: "added a product selector so shoppers could check out only the items they wanted, with return and shipping reassurance and trust badges near the top of the cart.",
-                  result: "conversion up about 5.2% and cart abandonment down about 11% (relative change).",
+                  result: "conversion up about 6.4% and cart abandonment reduced.",
                   learning: "the cart worked better once it supported how shoppers actually used it."
                 },
                 {
                   title: "Size-guide placement on the product page",
-                  context: "D2C fashion store, European market, over 100,000 daily users",
+                  context: "D2C fashion store, European market, about 17,000 to 18,000 daily users",
                   problem: "the size guide sat below the size selector, so shoppers hesitated while choosing a size.",
                   change: "moved the size guide next to the size selector so the chart was one tap away.",
-                  result: "conversion up about 3 to 3.5%, statistically significant.",
-                  learning: "help at the point of decision beat adding more content."
+                  result: "conversion up about 3.5%, directionally positive but not statistically significant .",
+                  learning: "help at the point of decision beat adding more content.",
+                  badge: "Win"
                 },
                 {
                   title: "Free-gift progress bar",
-                  context: "D2C hair-care brand, about 6,000 to 8,000 daily users",
+                  context: "D2C hair-care brand, about 6,500 to 7,000 daily users",
                   problem: "the mini-cart didn't show shoppers what gift they would earn at each milestone.",
                   change: "redesigned it to show the actual gift at each milestone, with tighter spacing and a countdown timer.",
                   result: "checkouts and conversion up about 6%, statistically significant."
@@ -1353,8 +1358,8 @@ export default function App() {
             }}
             results={[
               "15+ Successful A/B Tests",
-              "+5.2% conversion (cart selector)",
-              "+3 to 3.5% conversion (size guide)",
+              "+6.4% conversion (cart selector)",
+              "+3.5% conversion (size guide)",
               "+6% conversion (free-gift bar)"
             ]}
             resultsFootnote="Highlighted results are relative changes in conversion rate from three of these tests."

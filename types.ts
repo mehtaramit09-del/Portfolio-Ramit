@@ -27,6 +27,7 @@ export interface ExampleTestItem {
   change: string;
   result: string;
   learning?: string;
+  badge?: string;
 }
 
 export interface CaseStudyProps {
