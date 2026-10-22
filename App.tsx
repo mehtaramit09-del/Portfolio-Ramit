@@ -999,7 +999,7 @@ export default function App() {
               Turning Data Into <span className="gradient-text">Growth Decisions</span>
             </h1>
             <p className="text-sm md:text-xl text-gray-600 mb-4 md:mb-10 max-w-lg leading-relaxed">
-              From e-commerce analytics to conversion rate optimization—I analyze data to uncover insights and drive measurable business outcomes.
+              From e-commerce analytics to conversion rate optimization, I analyze data to uncover insights and drive measurable business outcomes.
             </p>
             <div className="flex flex-row gap-2.5 sm:gap-4 w-full sm:w-auto">
               <button 
